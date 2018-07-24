@@ -24,4 +24,9 @@ public class DemoApplication {
 	public String sayHi(String name) {
 		return "Hi,"+name;
     }
+	@RequestMapping("/pollTest")
+	@ResponseBody
+	public String testPoll(String name) {
+		return "Hi,"+name;
+	}
 }
