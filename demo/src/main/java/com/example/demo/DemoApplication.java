@@ -18,4 +18,10 @@ public class DemoApplication {
 	public String goHome() {
 		return "HomePage,Hello Word!";
 	}
+
+	@RequestMapping("/index")
+	@ResponseBody
+	public String sayHi(String name) {
+		return "Hi,"+name;
+    }
 }
