@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		{{message}}
+		 <span v-bind:title="message">鼠标停留几秒</span>
+		<p v-if="1==0">是否展示</p>
+		<ul>
+			<li v-for="todo in todos">
+				{{todo.text}}
+			</li>
+			<todo-item v-for="todo in todos" v-bind:todo="todo"></todo-item>
+		</ul>
+	</div>
+	<div id="app2">
+		<span v-once>{{message2}}</span>
+		<input type="text" v-model="message2" />
+		<br/>
+		<input type="text" name="num1" id="num1" v-model="num1" />
+		<p>+</p>
+		<input type="text" name="num2" id="num2"  v-model="num2"/>
+		<p>calc result is :{{result}}</p>
+	</div>
+	<div id="app3">
+		<div class="static" v-bind:class="classObject">abc</div>
+		<div class="static" v-bind:class="[active,textCls]" :style="{color:'red'}">abc</div>
+	</div>
+	<div id="ifApp">
+		<template v-if="ok">
+			<p>001</p>
+			<p>002</p>
+			<p>003</p>
+			<p>004</p>
+			<p>005</p>
+		</template>
+		<template v-else>
+			<p>1</p>
+			<p>2</p>
+			<p>3</p>
+			<p>4</p>
+			<p>5</p>
+		</template>
+		
+	</div>
+	<hr />
+	<div id="keyapp">
+		<template v-if="logintype=='username'">
+			<label  for="username">username</label>
+			<input  type="text" placeholder="please input your name" />
+		</template>
+		<template v-else>
+			<label for="email">email</label>
+			<input type="text" placeholder="please input your email" />
+		</template>
+		<button @click="toggleLoginType">toggle loginType</button>
+	</div>
+	<div id="example-5">
+  <select v-model="selected">
+    <option disabled value="">请选择</option>
+    <option>A</option>
+    <option>B</option>
+    <option>C</option>
+  </select>
+  <span>Selected: {{ selected }}</span>
+  <input type="text" v-model="msg" />
+</div>
+
+
+
+	<script>
+	   
+	    Vue.component('todo-item',{
+	    	props:['todo'],
+	    	template:'<li>{{todo.text}}</li>'
+	    });
+		var app = new Vue({
+			el : '#app',
+			data : {
+				message : 'Hello Vue!',
+				todos:[
+					{text:'学习JAVA'},
+					{text:'学习VUE'},
+					{text:'学习ANGULAR'},
+				]
+			}
+		});
+		var obj = {
+				message2:'Hi',
+				num1:0,
+				num2:0
+		}
+		//Object.freeze(obj);
+		var app2 = new Vue({
+			el:'#app2',
+			data:obj,
+			computed:{
+				result:function(){
+					return parseInt(this.num1)+parseInt(this.num2);
+				}
+			}
+		})
+		app2.$watch('message2',function(newValue,oldValue){
+			alert(oldValue+":"+newValue);
+		})
+		var app3 = new Vue({
+			el:'#app3',
+			data:{
+				active:'active',
+				textCls:'text-cls',
+				classObject:{
+					active:true,
+					textCls:true
+				}
+			}
+		})
+		var ifapp = new Vue({
+			el:'#ifApp',
+			data:{
+				ok:true
+			}
+			
+		})
+		var keyapp = new Vue({
+			el:'#keyapp',
+			data:{
+				logintype:'username'
+				
+			},
+			methods: {
+			    toggleLoginType: function () {
+			    	alert(123);
+			      return this.logintype = this.logintype === 'username' ? 'email' : 'username'
+			    }
+			  }
+		})
+		new Vue({
+			  el: '#example-5',
+			  data: {
+			    selected: '',
+			    msg:'  this is a message '
+			  }
+			})
+	</script>
+</body>
+</html>
